@@ -28,8 +28,8 @@ project/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/tradingwithme/LSTM-Model-for-Predicting-Stock-Prices-from-Historical-Data.git
-   cd LSTM-Model-for-Predicting-Stock-Prices-from-Historical-Data
+   git clone https://github.com/tradingwithme/lstm_price_predictor.git
+   cd lstm_price_predictor
    ```
 
 2. Install dependencies:
