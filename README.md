@@ -15,7 +15,7 @@ A modular framework for training and evaluating LSTM models on financial time se
 ```
 project/
 │
-├── main_script.py               # Contains the main() function
+├── main.py               # Contains the main() function
 ├── model_builder.py             # Builds the LSTM model
 ├── train_and_predict.py         # Trains and evaluates models
 ├── bestLSTModelFinder.py        # Finds optimal LSTM configs
