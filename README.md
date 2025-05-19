@@ -46,6 +46,7 @@ from main_script import main
 # Run with a simple LSTM model
 main(
     ticker="AAPL",
+    units=50, #or None for auto-tuning
     epochs=20,
     batch_size=32,
     model_name="simpleLSTMmodel",
@@ -54,7 +55,7 @@ main(
 )
 
 # Or use advanced modes:
-main(ticker="AAPL", model_name="bestLSTMFinder")
+main(ticker="AAPL", units=150, model_name="bestLSTMFinder")
 main(ticker="BTC-USD", model_name="fineTuneCombineLSTM")
 ```
 
