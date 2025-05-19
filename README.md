@@ -4,34 +4,33 @@ A modular framework for training and evaluating LSTM models on financial time se
 
 ## 🚀 Features
 
-- Download and preprocess financial data
-- Build and train simple LSTM models
-- Automatically search for the best LSTM configuration
-- Fine-tune and combine multiple LSTM models for better accuracy
-- Supports model selection via `model_name` parameter
+* Download and preprocess financial data
+* Build and train simple LSTM models
+* Automatically search for the best LSTM configuration
+* Fine-tune and combine multiple LSTM models for better accuracy
+* Supports model selection via the `model_name` parameter
 
 ## 🧩 Project Structure
 
 ```
-
 project/
 │
-├── main\_script.py                 # Contains the main() function
-├── model\_builder.py              # Builds the LSTM model
-├── train\_and\_predict.py          # Trains and evaluates models
-├── bestLSTModelFinder.py         # Finds optimal LSTM configs
-├── fineTune\_and\_combine\_LSTM.py  # Combines and fine-tunes models
-└── data\_fetcher.py               # Fetches historical data
-
-````
+├── main_script.py               # Contains the main() function
+├── model_builder.py             # Builds the LSTM model
+├── train_and_predict.py         # Trains and evaluates models
+├── bestLSTModelFinder.py        # Finds optimal LSTM configs
+├── fineTune_and_combine_LSTM.py # Combines and fine-tunes models
+└── data_fetcher.py              # Fetches historical data
+```
 
 ## ⚙️ Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/lstm-finance-predictor.git
    cd lstm-finance-predictor
-````
+   ```
 
 2. Install dependencies:
 
@@ -61,16 +60,16 @@ main(ticker="BTC-USD", model_name="fineTuneCombineLSTM")
 
 ## 📝 Parameters
 
-| Parameter     | Type  | Default                          | Description                                                      |
-| ------------- | ----- | -------------------------------- | ---------------------------------------------------------------- |
-| `ticker`      | str   | —                                | Stock or crypto ticker symbol                                    |
-| `units`       | int   | `max(16, min(256, len(df)/100))` | LSTM units in the model                                          |
-| `epochs`      | int   | 10                               | Number of training epochs                                        |
-| `batch_size`  | int   | 15                               | Size of training batches                                         |
-| `shuffle`     | bool  | True                             | Shuffle training data                                            |
-| `model_name`  | str   | 'simpleLSTMmodel'                | Model type: simpleLSTMmodel, bestLSTMFinder, fineTuneCombineLSTM |
-| `train_ratio` | float | 0.8                              | Ratio of training vs testing data                                |
-| `backcandles` | int   | 60                               | Number of time steps for LSTM windowing                          |
+| Parameter     | Type  | Default                          | Description                                                            |
+| ------------- | ----- | -------------------------------- | ---------------------------------------------------------------------- |
+| `ticker`      | str   | —                                | Stock or crypto ticker symbol                                          |
+| `units`       | int   | `max(16, min(256, len(df)/100))` | LSTM units in the model                                                |
+| `epochs`      | int   | 10                               | Number of training epochs                                              |
+| `batch_size`  | int   | 15                               | Size of training batches                                               |
+| `shuffle`     | bool  | True                             | Shuffle training data                                                  |
+| `model_name`  | str   | "simpleLSTMmodel"                | Model type: `simpleLSTMmodel`, `bestLSTMFinder`, `fineTuneCombineLSTM` |
+| `train_ratio` | float | 0.8                              | Ratio of training vs testing data                                      |
+| `backcandles` | int   | 60                               | Number of time steps for LSTM windowing                                |
 
 ## 🧪 Models Supported
 
@@ -94,13 +93,4 @@ main(ticker="BTC-USD", model_name="fineTuneCombineLSTM")
 
 MIT License
 
----
-
-*Developed for academic and educational purposes. Not intended for live trading.*
-
-```
-
----
-
-Let me know if you'd like help generating the `requirements.txt`, a CLI wrapper, or visualization add-ons.
-```
+> *Developed for academic and educational purposes. Not intended for live trading.*
