@@ -1,0 +1,1 @@
+train_ratio,val_split,macd_fast,macd_slow,macd_signal,rsi_length,rsi_scalar,rsi_drift,MAE,RMSE,Closeness,model_filename
