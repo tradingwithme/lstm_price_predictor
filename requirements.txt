@@ -2,3 +2,4 @@ webull
 keras==3.8.0
 yfinance==0.2.55
 tensorflow==2.18.0
+pandas_market_calendars
