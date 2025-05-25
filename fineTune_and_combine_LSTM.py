@@ -133,30 +133,30 @@ def execute_v2(ticker:str,units:int,backcandles:int=60,batch_size:int=15):
 
         # Log results
     with open(log_file, mode='a', newline='') as f:
-writer = csv.writer(f)
-writer.writerow([
-train_ratio, val_split,
-fast, slow, signal,
-length, scalar, drift,
-mae, rmse, closeness,
-filename
-])
-    # Load aggregated training data
-    X_train, y_train = aggregate_data_from_logs()
-    print(f"✅ Aggregated data shape: {X_train.shape}, {y_train.shape}")
+        writer = csv.writer(f)
+        writer.writerow([
+        train_ratio, val_split,
+        fast, slow, signal,
+        length, scalar, drift,
+        mae, rmse, closeness,
+        filename
+        ])
+        # Load aggregated training data
+        X_train, y_train = aggregate_data_from_logs()
+        print(f"✅ Aggregated data shape: {X_train.shape}, {y_train.shape}")
 
-    # Load existing model (e.g., best one or your choice)
-    model_path = 'saved_models/ratio_80__macd_12_26_9__rsi_14_100_2.h5'  # replace as needed
-    model = load_model(model_path)
+        # Load existing model (e.g., best one or your choice)
+        model_path = 'saved_models/ratio_80__macd_12_26_9__rsi_14_100_2.h5'  # replace as needed
+        model = load_model(model_path)
 
-    # Fine-tune on full aggregated training set
-    model.fit(
-X_train, y_train,
-epochs=10,
-batch_size=batch_size,
-validation_split=0.2,
-shuffle=False,
-callbacks=[EarlyStopping(patience=3, restore_best_weights=True)],
-verbose=1)
-    model.save('fine_tuned_model.h5')
-    print("✅ Fine-tuned model saved as fine_tuned_model.h5")
+        # Fine-tune on full aggregated training set
+        model.fit(
+    X_train, y_train,
+    epochs=10,
+    batch_size=batch_size,
+    validation_split=0.2,
+    shuffle=False,
+    callbacks=[EarlyStopping(patience=3, restore_best_weights=True)],
+    verbose=1)
+        model.save('fine_tuned_model.h5')
+        print("✅ Fine-tuned model saved as fine_tuned_model.h5")

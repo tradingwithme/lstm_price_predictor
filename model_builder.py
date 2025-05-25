@@ -1,9 +1,14 @@
 import numpy as np
 from pandas import DataFrame
+from keras import optimizers
+from keras.models import Model
 from sklearn.preprocessing import MinMaxScaler
+from keras.layers import LSTM, Input, Dense, Activation
 
 def data_preprocessing(df : DataFrame, backcandles=60):
     X_data = []
+    sc = MinMaxScaler(feature_range=(0,1))
+    scaled_df = sc.fit_transform(df)
     for i in range(len(df.columns[:-1])):
         X_data.append([])
         for j in range(backcandles, scaled_df.shape[0]): X_data[i].append(scaled_df[j-backcandles:j, i])
