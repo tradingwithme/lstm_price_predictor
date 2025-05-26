@@ -1,12 +1,14 @@
+from pandas import DataFrame
+from optimizer import run_optimizer
 from warnings import filterwarnings
 from model_builder import build_model
 from bestLSTModelFinder import execute
 from data_fetcher import get_historical_data
-global model, X_train, X_test, y_train, y_test
+#global model, X_train, X_test, y_train, y_test
 from train_and_predict import train_and_predict
 from fineTune_and_combine_LSTM import execute_v2
 
-def main(ticker:str,
+def main(ticker,
          units=None,
          epochs:int=10,
          batch_size:int=15,
@@ -56,14 +58,36 @@ def main(ticker:str,
 
     """
     filterwarnings('ignore')
-    df = get_historical_data(df,backcandles=backcandles)
-    if units is None: units = max(16, min(256, int(len(df) / 100)))
-    if model_name=='simpleLSTMmodel':
-        df['TargetNextClose'] = df.Close.shift(-1)
-        model, X_train, X_test, y_train, y_test = build_model(df, units=units, backcandles=backcandles, train_ratio=train_ratio)
-        train_and_predict(ticker,batch_size=batch_size, epochs=epochs,shuffle=shuffle)
-    elif model_name=='bestLSTMFinder': execute(df,units=units)
-    elif model_name=='fineTuneCombineLSTM': execute_v2(ticker,units,backcandles=backcandles,batch_size=batch_size)
+    if isinstance(ticker, str): 
+        df = get_historical_data(ticker,backcandles=backcandles)
+        if units is None: units = max(16, min(256, int(len(df) / 100)))
+        if model_name=='simpleLSTMmodel':
+            df['TargetNextClose'] = df.Close.shift(-1)
+            df.dropna(inplace=True)
+            model, X_train, X_test, y_train, y_test = build_model(df, units=units, backcandles=backcandles, train_ratio=train_ratio)
+            train_and_predict(ticker, model, 
+X_train, y_train, X_test, y_test, 
+train_ratio=train_ratio,
+batch_size=batch_size,
+epochs=epochs,shuffle=shuffle)
+        elif model_name=='bestLSTMFinder': execute(df,units=units)
+        elif model_name=='fineTuneCombineLSTM': execute_v2(ticker,units,backcandles=backcandles,batch_size=batch_size)
+    
+    elif isinstance(ticker, list):
+        df_pred = DataFrame()
+        if units is None: units = max(16, min(256, int(len(df) / 100)))
+        for symbol in ticker:
+            df = get_historical_data(symbol,backcandles=backcandles)
+            df['TargetNextClose'] = df.Close.shift(-1)
+            df.dropna(inplace=True)
+            model, X_train, X_test, y_train, y_test = build_model(df, units=units, backcandles=backcandles, train_ratio=train_ratio)
+            y_pred = train_and_predict(ticker, model, 
+X_train, y_train, X_test, y_test, 
+train_ratio=train_ratio,
+batch_size=batch_size, showPlot=False, 
+save_model=False, epochs=epochs, shuffle=shuffle)
+            if len(y_pred): df_pred[ticker] = y_pred
+        if len(df_pred): run_optimizer(df_pred, ticker_list=df_pred.columns.tolist())
 
 if __name__ == '__main__':
     main(
