@@ -1,27 +1,50 @@
-# LSTM-based Financial Time Series Prediction
+# LSTM-Based Financial Time Series Prediction + Portfolio Optimization
 
-A modular framework for training and evaluating LSTM models on financial time series data using historical prices. This project supports model building, training, tuning, and prediction for a variety of LSTM-based architectures.
+A modular framework for training and evaluating LSTM models on financial time series data using historical prices. This project now also supports **portfolio optimization using predicted returns**, with a **quantum-inspired hook** for future enhancements.
 
 ## 🚀 Features
 
-* Download and preprocess financial data
-* Build and train simple LSTM models
-* Automatically search for the best LSTM configuration
-* Fine-tune and combine multiple LSTM models for better accuracy
-* Supports model selection via the `model_name` parameter
+### 📊 LSTM Modeling
+- Download and preprocess financial data
+- Build and train simple LSTM models
+- Automatically search for the best LSTM configuration
+- Fine-tune and combine multiple LSTM models
+- Supports model selection via the `model_name` parameter
+
+### 💼 Portfolio Optimization
+- Use LSTM-predicted prices to estimate returns
+- Compute expected returns and risk (covariance)
+- Optimize portfolio weights via Mean-Variance Optimization (MVO)
+- Generate efficient frontier plots with Sharpe ratios
+- Export optimal weights as `.json`
+
+### 🔮 Quantum-Inspired Hook
+- `quantum_enabled = False` flag included
+- Placeholder for future quantum optimization (QAOA, Ising, Simulated Annealing)
+
+---
 
 ## 🧩 Project Structure
 
 ```
+
 project/
 │
-├── main.py               # Contains the main() function
-├── model_builder.py             # Builds the LSTM model
-├── train_and_predict.py         # Trains and evaluates models
-├── bestLSTModelFinder.py        # Finds optimal LSTM configs
-├── fineTune_and_combine_LSTM.py # Combines and fine-tunes models
-└── data_fetcher.py              # Fetches historical data
-```
+├── main.py                         # Entrypoint for LSTM model execution
+├── model\_builder.py                # Builds the LSTM model
+├── train\_and\_predict.py            # Trains and evaluates models
+├── bestLSTModelFinder.py           # Finds optimal LSTM configs
+├── fineTune\_and\_combine\_LSTM.py    # Combines and fine-tunes LSTM models
+├── data\_fetcher.py                 # Downloads historical data
+│
+├── optimizer.py                    # Runs classical portfolio optimization
+├── utils.py                        # Contains core logic for risk/return, plotting
+├── sample\_input.csv                # Dummy or LSTM-predicted prices (for testing)
+├── output/
+│   ├── weights.json                # Optimal portfolio allocation
+│   └── efficient\_frontier.png      # Portfolio visualization
+
+````
 
 ## ⚙️ Installation
 
@@ -30,7 +53,7 @@ project/
    ```bash
    git clone https://github.com/tradingwithme/lstm_price_predictor.git
    cd lstm_price_predictor
-   ```
+   ````
 
 2. Install dependencies:
 
@@ -38,28 +61,39 @@ project/
    pip install -r requirements.txt
    ```
 
+---
+
 ## 🧠 Usage
 
-```python
-from main_script import main
+### Run LSTM model:
 
-# Run with a simple LSTM model
+```python
+from main import main
+
+# Run simple LSTM model
 main(
     ticker="AAPL",
-    units=50, #or None for auto-tuning
+    units=50,  # or None for auto-tune
     epochs=20,
     batch_size=32,
     model_name="simpleLSTMmodel",
     train_ratio=0.8,
     backcandles=60
 )
-
-# Or use advanced modes:
-main(ticker="AAPL", units=150, model_name="bestLSTMFinder")
-main(ticker="BTC-USD", model_name="fineTuneCombineLSTM")
 ```
 
-## 📝 Parameters
+### Run optimizer (after LSTM predictions):
+
+```python
+from optimizer import run_optimizer
+
+# Assume df_pred contains predicted prices from LSTM
+run_optimizer(df_pred, ticker_list=df_pred.columns.tolist())
+```
+
+---
+
+## 🧮 Parameters
 
 | Parameter     | Type  | Default                          | Description                                                            |
 | ------------- | ----- | -------------------------------- | ---------------------------------------------------------------------- |
@@ -72,23 +106,44 @@ main(ticker="BTC-USD", model_name="fineTuneCombineLSTM")
 | `train_ratio` | float | 0.8                              | Ratio of training vs testing data                                      |
 | `backcandles` | int   | 60                               | Number of time steps for LSTM windowing                                |
 
-## 🧪 Models Supported
-
-* **simpleLSTMmodel**: Basic LSTM for regression of next close price.
-* **bestLSTMFinder**: Grid or random search to find best-performing hyperparameters.
-* **fineTuneCombineLSTM**: Advanced model combining and fine-tuning multiple LSTM variants.
+---
 
 ## 📈 Output
 
 * Model training logs
-* Prediction vs actual price plots
-* Saved models (optional, can be added)
+* LSTM prediction vs actual plots
+* Portfolio efficient frontier (`output/efficient_frontier.png`)
+* Optimal weights (`output/weights.json`)
+* Optional: Sharpe ratio, max drawdown, Conditional VaR
+
+---
+
+## 📊 Bonus Metrics
+
+* Max Drawdown (planned) ✅
+* Conditional Value at Risk (CVaR) ✅
+* Annotated Efficient Frontier (Optimal Portfolio) ✅
+
+---
+
+## 🔮 Quantum-Inspired Extension
+
+The module includes a placeholder (`quantum_enabled = False`) to support future development of quantum optimization strategies:
+
+* Simulated Annealing
+* Quantum Approximate Optimization Algorithm (QAOA)
+* Ising model solvers
+
+---
 
 ## 🛠️ TODO
 
-* Add logging and metrics export
-* Add support for saving models and results
-* Integrate more model types (GRU, Transformer)
+* Add live model export and loading
+* Add dashboard (e.g., Streamlit)
+* Integrate other model types (GRU, Transformer)
+* Implement real quantum-inspired solvers
+
+---
 
 ## 📄 License
 
