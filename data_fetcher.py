@@ -25,7 +25,7 @@ def getDictionary(ticker:str, get_dataframe=True):
             time(0,0)).timestamp())) for i in range(len(dates)) if i!=(len(dates)-1)}
             if get_dataframe: dictionary = concat(list(dictionary.values())).reset_index().drop_duplicates().set_index('timestamp')
             return dictionary
-    print('No data found.')
+    print('No data obtained.')
     return DataFrame()
 
 def get_historical_data(ticker:str, macd_params: dict={}, rsi_params: dict={}):
