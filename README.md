@@ -19,7 +19,7 @@ A modular framework for training and evaluating LSTM models on financial time se
 - Export optimal weights as `.json`
 
 ### 🔮 Quantum-Inspired Hook
-- `quantum_enabled = True` flag included for future quantum optimization (QAOA, Ising, Simulated Annealing)
+- `quantum_enabled = True` flag included for future quantum optimization such as QAOA, Ising, & Simulated Annealing.
 
 ---
 
