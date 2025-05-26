@@ -161,7 +161,7 @@ You can toggle quantum optimization with the `quantumEnabled` flag and control t
 
 ---
 
-## 🛠️ TODO
+## 🛠️ TO DO
 
 * Add live model export and loading
 * Add dashboard (e.g., Streamlit)
